@@ -1,19 +1,44 @@
 import { useEffect, useMemo, useState } from "react";
 import { api, type AdminInsights } from "./api";
+import { ObservabilityPanel } from "./Observability";
+
+type Portal = "insights" | "openobserve";
 
 export function AdminPage() {
+  const [portal, setPortal] = useState<Portal>("insights");
+
   return (
     <div className="admin-shell">
       <section className="panel">
         <div className="topbar">
           <div>
             <div className="status">admin portal</div>
-            <p className="hint">game popularity, outcomes, and recent matches</p>
+            <p className="hint">
+              {portal === "insights"
+                ? "game popularity, outcomes, and recent matches"
+                : "OpenObserve catalog, pipeline check, and signal injection"}
+            </p>
+          </div>
+          <div className="nav">
+            <button
+              type="button"
+              className={`btn secondary ${portal === "insights" ? "active" : ""}`}
+              onClick={() => setPortal("insights")}
+            >
+              insights
+            </button>
+            <button
+              type="button"
+              className={`btn secondary ${portal === "openobserve" ? "active" : ""}`}
+              onClick={() => setPortal("openobserve")}
+            >
+              openobserve
+            </button>
           </div>
         </div>
       </section>
 
-      <InsightsPanel />
+      {portal === "insights" ? <InsightsPanel /> : <ObservabilityPanel />}
     </div>
   );
 }

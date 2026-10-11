@@ -47,7 +47,7 @@ Each game has a lobby description, on-board rules, and a bot. Placing, dropping,
 - Login UI has **player** and **admin portal** modes
 - Default admin: `admin` / `admin` → `/admin`
 - Admin portal: game popularity, favoured game, top players, recent matches
-- **Metrics inject**: table of every `arcade_*` metric in code; **inject** sends N samples to OpenObserve
+- **OpenObserve**: metrics catalog and action list; **inject triad** sends a log, metrics, and span for an action; **verify pipeline** checks that logs, metrics, and traces round-trip
 
 ## Observability
 

@@ -114,7 +114,7 @@ function AuthPage() {
 
       <p className="hint" style={{ marginTop: "1rem" }}>
         {mode === "admin"
-          ? "manage insights, leaderboards, and OpenObserve metric injection"
+          ? "insights, leaderboards, and OpenObserve logs, metrics, and traces"
           : "one account for every game · human vs arcade bot"}
       </p>
 
@@ -514,7 +514,7 @@ function AppChrome() {
         {playing || lobby ? null : (
           <p className="tagline">
             {adminPortal
-              ? "insights, top players, and metric injection"
+              ? "insights and OpenObserve logs, metrics, traces"
               : "human vs arcade bot · one login · one scoreboard"}
           </p>
         )}

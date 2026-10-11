@@ -214,6 +214,18 @@ export const ACTIONS_CATALOG: ActionDef[] = [
     source: "admin.insights",
   },
   {
+    event: "admin.action_inject",
+    description: "Admin injected a log + metric + span triad",
+    metrics: [
+      {
+        name: "arcade_admin_injects_total",
+        type: "counter",
+        defaultLabels: { kind: "action", name: "match.move" },
+      },
+    ],
+    source: "admin.injectAction",
+  },
+  {
     event: "observability.verify",
     description: "Canary probe for logs/metrics/traces",
     metrics: [

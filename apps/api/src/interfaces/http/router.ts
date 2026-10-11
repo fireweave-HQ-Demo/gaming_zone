@@ -169,6 +169,32 @@ export function createHandler(services: AppServices) {
         return respond(json(insights));
       }
 
+      if (path === "/api/admin/observability" && req.method === "GET") {
+        const user = await services.auth.me(sessionTokenFromRequest(req));
+        if (!user) return respond(json({ error: "unauthorized" }, { status: 401 }));
+        return respond(json(services.admin.catalog(user)));
+      }
+
+      if (path === "/api/admin/observability/verify" && req.method === "POST") {
+        const user = await services.auth.me(sessionTokenFromRequest(req));
+        if (!user) return respond(json({ error: "unauthorized" }, { status: 401 }));
+        const report = await services.admin.verify(user);
+        return respond(json(report), { verify_ok: report.ok });
+      }
+
+      if (path === "/api/admin/actions/inject" && req.method === "POST") {
+        const user = await services.auth.me(sessionTokenFromRequest(req));
+        if (!user) return respond(json({ error: "unauthorized" }, { status: 401 }));
+        const body = (await req.json()) as { event?: string; count?: number };
+        const result = await services.admin.injectAction(
+          user,
+          body.event ?? "",
+          body.count ?? 1,
+          trace,
+        );
+        return respond(json(result), { action: result.event, count: result.count });
+      }
+
       // Dev: never serve stale apps/web/dist — send browsers to Vite HMR.
       const webDev = process.env.WEB_DEV_ORIGIN?.replace(/\/$/, "");
       if (webDev) {

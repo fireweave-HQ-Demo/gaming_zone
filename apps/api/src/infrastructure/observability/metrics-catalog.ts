@@ -104,6 +104,13 @@ export const METRICS_CATALOG: MetricDef[] = [
     source: "scoreboard.forUser",
   },
   {
+    name: "arcade_admin_injects_total",
+    type: "counter",
+    description: "Admin portal injections of an action triad (log, metrics, span)",
+    defaultLabels: { kind: "action", name: "match.move" },
+    source: "admin.injectAction",
+  },
+  {
     name: "arcade_openobserve_export_errors_total",
     type: "counter",
     description: "Failed exports to OpenObserve",

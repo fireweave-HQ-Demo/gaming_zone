@@ -54,6 +54,47 @@ export type AdminInsights = {
   totals: { plays: number; plays24h: number; players: number };
 };
 
+export type MetricDef = {
+  name: string;
+  type: "counter" | "gauge" | "histogram";
+  description: string;
+  defaultLabels: Record<string, string>;
+  source: string;
+};
+
+export type ActionDef = {
+  event: string;
+  description: string;
+  metrics: Array<{
+    name: string;
+    type: "counter" | "gauge" | "histogram";
+    defaultLabels: Record<string, string>;
+  }>;
+  source: string;
+};
+
+export type ObservabilityCatalog = {
+  configured: boolean;
+  streams: { logs: string; traces: string };
+  metrics: MetricDef[];
+  actions: ActionDef[];
+};
+
+export type VerifyReport = {
+  configured: boolean;
+  ok: boolean;
+  error?: string;
+  probe_id?: string;
+  duration_ms?: number;
+  attempts?: number;
+  streams?: { logs: string; traces: string };
+  signals?: {
+    logs: { ingest: boolean; fetched: boolean };
+    metrics: { ingest: boolean; fetched: boolean };
+    traces: { ingest: boolean; fetched: boolean; stream: string };
+  };
+};
+
 export class ApiError extends Error {
   status: number;
   constructor(message: string, status: number) {
@@ -130,4 +171,12 @@ export const api = {
     }),
   scoreboard: () => request<Scoreboard>("/api/scoreboard"),
   adminInsights: () => request<AdminInsights>("/api/admin/insights"),
+  adminObservability: () => request<ObservabilityCatalog>("/api/admin/observability"),
+  adminVerify: () =>
+    request<VerifyReport>("/api/admin/observability/verify", { method: "POST" }),
+  adminInjectAction: (event: string, count: number) =>
+    request<{ ok: boolean; event: string; count: number; traceIds: string[] }>(
+      "/api/admin/actions/inject",
+      { method: "POST", body: JSON.stringify({ event, count }) },
+    ),
 };

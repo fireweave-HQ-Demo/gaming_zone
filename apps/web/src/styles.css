@@ -729,6 +729,39 @@ table.data th { font-size: 0.8rem; opacity: 0.7; }
 .auth-modes { margin-top: 0.25rem; }
 .admin-shell { display: grid; gap: 0; }
 
+.oo-count {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.85rem;
+  opacity: 0.75;
+}
+.oo-count input {
+  width: 4.2rem;
+  padding: 0.35rem 0.45rem;
+  border: 1px solid var(--line);
+  background: #fff;
+  color: inherit;
+}
+.oo-ok { color: var(--teal); opacity: 1; }
+.oo-signals {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  align-items: center;
+  margin-top: 0.75rem;
+}
+.oo-pill {
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 0.2rem 0.5rem;
+  border: 1px solid var(--line);
+}
+.oo-pill.ok { background: rgba(0, 184, 160, 0.18); border-color: var(--teal); }
+.oo-pill.bad { background: rgba(255, 45, 85, 0.12); border-color: var(--danger); }
+code { font-size: 0.88em; }
+
 @media (max-width: 640px) {
   .app { padding-top: 0.65rem; }
   .panel { padding: 0.85rem; }
