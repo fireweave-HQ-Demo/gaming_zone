@@ -30,7 +30,6 @@ services:
     environment:
       NODE_ENV: development
       DATABASE_URL: postgres://${POSTGRES_USER:-tictac}:${POSTGRES_PASSWORD:-tictac}@db:5432/${POSTGRES_DB:-tictac}
-      SESSION_SECRET: ${SESSION_SECRET:-arcade-dev-secret}
       PORT: "3000"
       OPENOBSERVE_URL: ${OPENOBSERVE_URL}
       OPENOBSERVE_USER: ${OPENOBSERVE_USER}

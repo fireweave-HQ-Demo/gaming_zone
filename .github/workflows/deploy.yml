@@ -21,12 +21,9 @@ jobs:
           POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
           POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
-          SESSION_SECRET: ${{ secrets.SESSION_SECRET }}
           OPENOBSERVE_URL: ${{ secrets.OPENOBSERVE_URL }}
           OPENOBSERVE_USER: ${{ secrets.OPENOBSERVE_USER }}
           OPENOBSERVE_PASSWORD: ${{ secrets.OPENOBSERVE_PASSWORD }}
-          OPENOBSERVE_LOG_STREAM: ${{ secrets.OPENOBSERVE_LOG_STREAM }}
-          OPENOBSERVE_TRACE_STREAM: ${{ secrets.OPENOBSERVE_TRACE_STREAM }}
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USER }}
@@ -34,7 +31,7 @@ jobs:
           port: 22
           timeout: 20s
           command_timeout: 2m
-          envs: POSTGRES_USER,POSTGRES_PASSWORD,POSTGRES_DB,DATABASE_URL,SESSION_SECRET,OPENOBSERVE_URL,OPENOBSERVE_USER,OPENOBSERVE_PASSWORD,OPENOBSERVE_LOG_STREAM,OPENOBSERVE_TRACE_STREAM
+          envs: POSTGRES_USER,POSTGRES_PASSWORD,POSTGRES_DB,DATABASE_URL,OPENOBSERVE_URL,OPENOBSERVE_USER,OPENOBSERVE_PASSWORD
           script: |
             set -euo pipefail
             APP_DIR="$HOME/arcade"
@@ -42,13 +39,13 @@ jobs:
               # migrate from legacy temp-battle checkout if present
               if [ -d "$HOME/temp-battle/.git" ]; then
                 mv "$HOME/temp-battle" "$APP_DIR"
-                git -C "$APP_DIR" remote set-url origin https://github.com/fireweave-HQ-Demo/arcade.git
+                git -C "$APP_DIR" remote set-url origin https://github.com/fireweave-HQ-Demo/gaming_zone.git
               else
-                git clone --depth=1 https://github.com/fireweave-HQ-Demo/arcade.git "$APP_DIR"
+                git clone --depth=1 https://github.com/fireweave-HQ-Demo/gaming_zone.git "$APP_DIR"
               fi
             fi
             cd "$APP_DIR"
-            git remote set-url origin https://github.com/fireweave-HQ-Demo/arcade.git
+            git remote set-url origin https://github.com/fireweave-HQ-Demo/gaming_zone.git
             git fetch --depth=1 origin main
             git reset --hard origin/main
             chmod +x scripts/deploy-prod.sh scripts/prod-start.sh scripts/prod-stop.sh scripts/dev.sh scripts/dev-stop.sh

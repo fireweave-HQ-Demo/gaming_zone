@@ -30,7 +30,6 @@ services:
     environment:
       NODE_ENV: production
       DATABASE_URL: ${DATABASE_URL}
-      SESSION_SECRET: ${SESSION_SECRET}
       HOST: "0.0.0.0"
       PORT: "80"
       OPENOBSERVE_URL: ${OPENOBSERVE_URL}
